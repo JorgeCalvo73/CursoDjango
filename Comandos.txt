@@ -1,0 +1,75 @@
+prueba@jorge.com
+root1235
+
+
+COMANDOS
+
++ Activar entorno: activate py37
++ Desactivar entorno: deactivate
++ Instalar Django: pip install django
++ Mostrar los paquetes instalados: pip list (dentro del entorno virtual)
++ Ejecutar un script dentro del entorno: python nombreArchivo
++ Crear un nuevo proyecto dentro del entorno: django-admin startproject nombreProyecto
++ Para sincronizar la BD: python manage.py migrate LA BD TIENE QUE ESTAR CREADA ANTES
++ Si pide el psycopg2 POR ALGÚN MOTIVO hacer pip install psycopg2-binary en el directorio del entorno virtual
++ Para instalar el gestor de cookies para el token de usuario: npm install ngx-cookie-service --save
++ Angular Material: ng add @angular/material
++ Para enumerados en Django Rest Framework: pip install django-enumchoicefield
+
++ Para crear una nueva app dentro de un proyecto: python manage.py startapp nombreapp
++ python manage.py makemigrations nombreapp: Para indicar a Django que hay cambios en algún modelo que hemos creado
+  y así cree un fichero de migraciones (backup).
++ python manage.py migrate nombreapp: Para aplicar los cambios del comando de arriba a la BD.
++ python manage.py createsuperuser: Para crear el super usuario para el panel de admin.
++ pip install pylint-django: Para tener soporte de sintaxis de Django
++ pip install Pillow: Para gestionar imágenes
+
+
+
+NOTAS
+
++ El fichero manage.py sirve para gestionar todo nuestro proyecto desde la terminal.
++ El fichero settings.py contiene la configuración del proyecto.
++ El fichero urls.py es el encargado de manejar las direcciones de la web.
++ El fichero wsgi.py es un script que contiene la información para desplegar el proyecto en producción.
+
++ Django tiene apps integradas, como admin, auth o sessions, que sirven para gestionar el panel de administración, la autenticación de usuarios...
+  Estas apps están en el fichero settings.py. Estas apps son completamente reutilizables por otros proyectos.
+
++ Al crear una app se nos generan una serie de ficheros, uno de los más importantes es views.py, en el que se definen las vistas de una app.
+
++ Las templates de una app van en un directorio en la app llamado "templates".
+
++ Django por defecto no carga las plantillas de una app, para hacer que lo haga tenemos que poner la app creada en el apartado INSTALLED_APPS, 
+  en settings.py
+
++ Para las urls nunca usar enlaces en crudo, si no tags url.
+
++ Por defecto el servidor de Django no soporta archivos estáticos como CSS o JS, para que lo haga hay que hacer ajustes.
+  	- Hay que crear ena carpeta static en la app, con otra carpeta core dentro, y dentro de esta meteremos las carpetas con los js, css, imágenes...
+  	- Usaremos el tag {% load static %} antes de los links, y cada enlace tendrá esta pinta: <link href= "{% static 'core/dirección.css' %}">
+
++ El tag {% load static %} hace efecto en todo el template.
+
++ Para que Django gestione imágenes tenemos que instalar un módulo externo llamado Pillow, en el entorno virtual, y para verlas en el entorno de 
+  desarrollo tenemos que activar el debug y añadir en los ficheros urls.py y settings-py cierta configuración adicional.
+
++ Los modelos se crean en el fichero models.py
+
++ Se pueden crear template tags propios, se crean dentro de un directorio llamado templatetags dentro de la app en la que que los queremos.
+  Indicamos que es un paquete mediante el archivo __init__.py dentro de la carpeta.
+
++ Django inyecta información de la sesión activa en el contexto.
+
++ Para poner el "editar" en una template tenemos que pasarle al template tag url la página a editar con el siguiente formato:
+	- {% url 'admin:nombreApp_nombreModeloApp_acciónARealizar' obj.id %}
+	- {% url 'admin:pages_page_change' page.id %}
+	- Hay otras acciones, como "add" para añadir o "delete" para borrar
+
++ Meteremos un editor "wysiwyg" para el panel de admin:
+	- Instalamos el paquete django-ckeditor
+	- Añadimos ckeditor en installed-apps, en settings
+	- Importamos ckeditor en el modelo
+	- Modificamos los campos del modelo en los que queramos mostrar el editor wysiwyg
+	- En settings personalizamos la barra del editor
+	- En el template tenemos que indicar que el código html del editor es seguro mediante el filtro |safe
